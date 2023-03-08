@@ -1,11 +1,11 @@
-import styles from './Footer.module.css'
+import React from "react"
 
-export default function Footer() {
+const Footer = () => {
   return (
-    <>
-      <footer className={styles.footer}>
-        Made with <img src="/netliheart.svg" alt="Netlify Logo" className={styles.logo} /> for you
-      </footer>
-    </>
+    <footer style={{ backgroundColor: "white", padding: "1rem" }}>
+      <p style={{ margin: 0, fontFamily: "Arial, sans-serif", fontSize: "1rem" }}>© 2023 Nicolas Wicher. All rights reserved.</p>
+    </footer>
   )
 }
+
+export default Footer
