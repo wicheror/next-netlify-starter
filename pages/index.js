@@ -1,67 +1,42 @@
-// Your YouTube API key
-const API_KEY = "AIzaSyDfASpJPAzrhiYLRL5vyv4FAvAXdIdsgnk";
+import React from "react"
+import { StaticImage } from "gatsby-plugin-image"
 
-// The ID of the YouTube channel to search for videos
-const CHANNEL_ID = "UC_CHANNEL_ID";
-
-// The maximum number of videos to search for
-const MAX_RESULTS = 10;
-
-// An array to store the search results
-const videos = [];
-
-// Initialize the YouTube Data API client
-const client = gapi.client.init({
-  apiKey: API_KEY
-});
-
-// Search for videos on the specified channel
-function searchVideos() {
-  return client.youtube.search.list({
-    part: "id",
-    channelId: CHANNEL_ID,
-    type: "video",
-    maxResults: MAX_RESULTS
-  });
+const IndexPage = () => {
+  return (
+    <main style={{ backgroundColor: "white", padding: "1rem" }}>
+      <h2 style={{ fontFamily: "Arial, sans-serif", fontSize: "1.5rem" }}>Gallery</h2>
+      <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <div style={{ margin: "1rem" }}>
+          <StaticImage
+            src="../images/painting1.jpg"
+            alt="Painting 1"
+            placeholder="blurred"
+            layout="fixed"
+            width={200}
+          />
+        </div>
+        <div style={{ margin: "1rem" }}>
+          <StaticImage
+            src="../images/painting2.jpg"
+            alt="Painting 2"
+            placeholder="blurred"
+            layout="fixed"
+            width={200}
+          />
+        </div>
+        <div style={{ margin: "1rem" }}>
+          <StaticImage
+            src="../images/painting3.jpg"
+            alt="Painting 3"
+            placeholder="blurred"
+            layout="fixed"
+            width={200}
+          />
+        </div>
+        {/* Add more paintings here */}
+      </div>
+    </main>
+  )
 }
 
-// Get the details of the search results
-function getVideoDetails(searchResults) {
-  const videoIds = searchResults.map(result => result.id.videoId).join(",");
-  return client.youtube.videos.list({
-    part: "snippet,contentDetails",
-    id: videoIds
-  });
-}
-
-// Store the search results in the videos array
-function storeResults(results) {
-  videos.push(...results);
-}
-
-// Select a random video from the search results
-function getRandomVideo() {
-  const randomIndex = Math.floor(Math.random() * videos.length);
-  return videos[randomIndex];
-}
-
-// Embed the selected video on the page
-function playVideo(video) {
-  const player = new YT.Player("player", {
-    videoId: video.id,
-    events: {
-      onReady: function(event) {
-        event.target.playVideo();
-      }
-    }
-  });
-}
-
-// Initialize the YouTube Data API client and search for videos
-gapi.load("client", () => {
-  searchVideos()
-    .then(getVideoDetails)
-    .then(storeResults)
-    .then(getRandomVideo)
-    .then(playVideo);
-});
+export default IndexPage
